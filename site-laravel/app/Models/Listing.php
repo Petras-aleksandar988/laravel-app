@@ -2,35 +2,25 @@
 
 namespace App\Models;
 
-use PhpParser\Node\Stmt\Foreach_;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Listing {
-    public static function all(){
-       return [
+class Listing extends Model
+{
+    use HasFactory;
 
+    public function scopeFilter($query,array $filters ){
+            if($filters['tag'] ?? false){
+               $query->where('tags', "like" , "%". $filters['tag'] . "%" );
 
+            };
+            if($filters['search'] ?? false){
+               $query->where('tags', "like" , "%". $filters['search'] . "%" )->orWhere('title', "like" , "%". $filters['search'] . "%" )->orWhere('description', "like" , "%". $filters['search'] . "%" );
 
-        [
-        'id'=> 1,
-        'title'=> "Liating One",
-        'description' => 'lorem ipsumsdsdsd sdfsdf'
-    ],
-    [
-            'id'=> 2,
-            'title'=> "Listing Two",
-            'description' => 'lorem ipsumsdsdsd sdfsdf sdadsad'
-    ]
-    ] ;
+            };
+
     }
-
-    public static function find($id){
-        $listings = self::all();
-    
-        foreach ($listings as $listing) {
-           if($listing['id'] == $id){
-            return $listing;
-           }
-        }
-     
-}
+    public function user(){
+      return $this->belongsTo(User::class, 'user_id');
+    }
 }
