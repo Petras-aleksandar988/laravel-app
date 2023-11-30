@@ -42,7 +42,7 @@
                     <tr class="border-gray-300">
 
                         <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">
-                   <p class="text-center"></p>
+                   <p class="text-center">No Jobs Posted</p>
                         </td>
                     </tr>
 
